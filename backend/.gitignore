@@ -1,7 +1,7 @@
-backend/functions/node_modules/
-backend/functions/keys/
-backend/functions/utility/firebaseConfig.js
-backend/.firebaserc
-backend/dbschema.js
-backend/firebase.json
+functions/node_modules/
+functions/keys/
+functions/utility/firebaseConfig.js
+.firebaserc
+dbschema.js
+firebase.json
 .env
