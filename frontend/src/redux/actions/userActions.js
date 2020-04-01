@@ -83,3 +83,19 @@ export const uploadImage = formData => dispatch => {
       console.log(err);
     });
 };
+
+export const editUserDetails = userDetails => dispatch => {
+  dispatch({ type: LOADING_USER });
+  axios({
+    method: "post",
+    url: "/user",
+    data: userDetails,
+    headers: { Authorization: localStorage.getItem("FBIdToken") }
+  })
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
