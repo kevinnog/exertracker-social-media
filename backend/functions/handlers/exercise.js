@@ -30,6 +30,10 @@ exports.getAllExercises = (request, response) => {
 
 // Post exercise
 exports.postOneExercise = (request, response) => {
+  if (request.body.body.trim() === "") {
+    return response.status(400).json({ body: "Body must not be empty" });
+  }
+
   const newExercise = {
     body: request.body.body,
     userHandle: request.user.handle,

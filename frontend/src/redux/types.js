@@ -11,6 +11,7 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const LOADING_DATA = "LOADING_DATA";
 
 // Data reducer types
+export const POST_EXERCISE = "POST_EXERCISE";
 export const SET_EXERCISES = "SET_EXERCISES";
 export const SET_EXERCISE = "SET_EXERCISE";
 export const LIKE_EXERCISE = "LIKE_EXERCISE";

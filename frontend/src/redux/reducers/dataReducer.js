@@ -3,7 +3,8 @@ import {
   LOADING_DATA,
   LIKE_EXERCISE,
   UNLIKE_EXERCISE,
-  DELETE_EXERCISE
+  DELETE_EXERCISE,
+  POST_EXERCISE
 } from "../types";
 
 const initialState = {
@@ -41,6 +42,11 @@ export default function(state = initialState, action) {
       state.exercises.splice(index2, 1);
       return {
         ...state
+      };
+    case POST_EXERCISE:
+      return {
+        ...state,
+        exercises: [action.payload, ...state.exercises]
       };
     default:
       return state;

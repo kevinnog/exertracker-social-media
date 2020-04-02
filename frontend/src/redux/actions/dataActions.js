@@ -1,9 +1,13 @@
 import {
   SET_EXERCISES,
+  POST_EXERCISE,
   LOADING_DATA,
   LIKE_EXERCISE,
   UNLIKE_EXERCISE,
-  DELETE_EXERCISE
+  DELETE_EXERCISE,
+  LOADING_UI,
+  SET_ERRORS,
+  CLEAR_ERRORS
 } from "../types";
 import axios from "axios";
 
@@ -17,6 +21,27 @@ export const getExercises = () => dispatch => {
     })
     .catch(err => {
       dispatch({ type: SET_EXERCISES, payload: [] });
+    });
+};
+
+// Post an exercise
+export const postExercise = newExercise => dispatch => {
+  dispatch({ type: LOADING_UI });
+  axios({
+    method: "post",
+    url: "/exercise",
+    data: newExercise,
+    headers: { Authorization: localStorage.getItem("FBIdToken") }
+  })
+    .then(res => {
+      dispatch({ type: POST_EXERCISE, payload: res.data });
+      dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
     });
 };
 
@@ -50,6 +75,7 @@ export const unlikeExercise = exerciseId => dispatch => {
     });
 };
 
+// Delete an exercise
 export const deleteExercise = exerciseId => dispatch => {
   axios({
     method: "delete",
@@ -62,4 +88,8 @@ export const deleteExercise = exerciseId => dispatch => {
     .catch(err => {
       console.log(err);
     });
+};
+
+export const clearErrors = () => dispatch => {
+  dispatch({ type: CLEAR_ERRORS });
 };
