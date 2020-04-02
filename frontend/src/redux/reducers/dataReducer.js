@@ -2,7 +2,8 @@ import {
   SET_EXERCISES,
   LOADING_DATA,
   LIKE_EXERCISE,
-  UNLIKE_EXERCISE
+  UNLIKE_EXERCISE,
+  DELETE_EXERCISE
 } from "../types";
 
 const initialState = {
@@ -30,6 +31,14 @@ export default function(state = initialState, action) {
         exercise => exercise.exerciseId === action.payload.exerciseId
       );
       state.exercises[index] = action.payload;
+      return {
+        ...state
+      };
+    case DELETE_EXERCISE:
+      let index2 = state.exercises.findIndex(
+        exercise => exercise.exerciseId === action.payload
+      );
+      state.exercises.splice(index2, 1);
       return {
         ...state
       };

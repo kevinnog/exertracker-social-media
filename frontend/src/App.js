@@ -4,6 +4,7 @@ import "./App.css";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import jwtDecode from "jwt-decode";
+import themeObject from "./utility/themeObject";
 
 // Redux
 import { Provider } from "react-redux";
@@ -20,24 +21,7 @@ import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
 
-const darkTheme = createMuiTheme({
-  palette: {
-    //type: "dark",
-    primary: {
-      light: "#455a64",
-      main: "#263238",
-      contrastText: "#fff"
-    },
-    secondary: {
-      light: "#ef5350",
-      main: "#f5f5f5",
-      contrastText: "#fff"
-    }
-  },
-  typography: {
-    useNextVariants: true
-  }
-});
+const darkTheme = createMuiTheme(themeObject);
 
 const token = localStorage.FBIdToken;
 

@@ -2,7 +2,8 @@ import {
   SET_EXERCISES,
   LOADING_DATA,
   LIKE_EXERCISE,
-  UNLIKE_EXERCISE
+  UNLIKE_EXERCISE,
+  DELETE_EXERCISE
 } from "../types";
 import axios from "axios";
 
@@ -43,6 +44,20 @@ export const unlikeExercise = exerciseId => dispatch => {
   })
     .then(res => {
       dispatch({ type: UNLIKE_EXERCISE, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const deleteExercise = exerciseId => dispatch => {
+  axios({
+    method: "delete",
+    url: `/exercise/${exerciseId}`,
+    headers: { Authorization: localStorage.getItem("FBIdToken") }
+  })
+    .then(() => {
+      dispatch({ type: DELETE_EXERCISE, payload: exerciseId });
     })
     .catch(err => {
       console.log(err);
