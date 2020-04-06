@@ -4,7 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import EditDetails from "./EditDetails";
-import MyButton from "../utility/MyButton";
+import MyButton from "../../utility/MyButton";
 
 // Material-UI items
 import Button from "@material-ui/core/Button";
@@ -21,11 +21,11 @@ import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 // Redux
 import { connect } from "react-redux";
-import { logoutUser, uploadImage } from "../redux/actions/userActions";
+import { logoutUser, uploadImage } from "../../redux/actions/userActions";
 
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
-    padding: 20
+    padding: 20,
   },
   profile: {
     "& .image-wrapper": {
@@ -34,8 +34,8 @@ const styles = theme => ({
       "& button": {
         position: "absolute",
         top: "80%",
-        left: "70%"
-      }
+        left: "70%",
+      },
     },
     "& .profile-pic": {
       width: 200,
@@ -43,37 +43,37 @@ const styles = theme => ({
       objectFit: "cover",
       maxWidth: "100%",
       maxHeigth: "100%",
-      borderRadius: "150%"
+      borderRadius: "150%",
     },
     "& .profile-details": {
       textAlign: "center",
       "& span, svg": {
-        verticalAlign: "middle"
+        verticalAlign: "middle",
       },
       "& a": {
-        color: theme.palette.primary.main
-      }
+        color: theme.palette.primary.main,
+      },
     },
     "& hr": {
       border: "none",
-      margin: "0 0 10px 0"
+      margin: "0 0 10px 0",
     },
     "& svg.button": {
       "&:hover": {
-        cursor: "pointer"
-      }
-    }
+        cursor: "pointer",
+      },
+    },
   },
   buttons: {
     textAlign: "center",
     "& a": {
-      margin: "20px 10px"
-    }
-  }
+      margin: "20px 10px",
+    },
+  },
 });
 
 class Profile extends Component {
-  handleImageChange = event => {
+  handleImageChange = (event) => {
     const image = event.target.files[0];
     const formData = new FormData();
     formData.append("image", image, image.name);
@@ -95,8 +95,8 @@ class Profile extends Component {
       user: {
         credentials: { handle, createdAt, imageUrl, bio, website, location },
         loading,
-        authenticated
-      }
+        authenticated,
+      },
     } = this.props;
 
     let profileMarkup = !loading ? (
@@ -193,15 +193,15 @@ class Profile extends Component {
 
 const mapActionsToProps = { logoutUser, uploadImage };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 Profile.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   uploadImage: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default connect(

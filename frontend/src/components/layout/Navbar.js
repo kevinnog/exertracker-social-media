@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import MyButton from "../utility/MyButton";
-import PostExercise from "./PostExercise";
+import MyButton from "../../utility/MyButton";
+import PostExercise from "../exercise/PostExercise";
 
 // Material-UI items
 import AppBar from "@material-ui/core/AppBar";
@@ -53,11 +53,11 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  authenticated: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  authenticated: state.user.authenticated
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
 });
 
 export default connect(mapStateToProps)(Navbar);

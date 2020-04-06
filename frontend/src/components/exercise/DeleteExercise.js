@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import MyButton from "../utility/MyButton";
+import MyButton from "../../utility/MyButton";
 
 // Material-UI items
 import Button from "@material-ui/core/Button";
@@ -14,19 +14,19 @@ import DeleteForever from "@material-ui/icons/DeleteForever";
 
 // Redux
 import { connect } from "react-redux";
-import { deleteExercise } from "../redux/actions/dataActions";
+import { deleteExercise } from "../../redux/actions/dataActions";
 
 const styles = {
   deleteButton: {
     position: "absolute",
     left: "90%",
-    top: "10%"
-  }
+    top: "10%",
+  },
 };
 
 class DeleteExercise extends Component {
   state = {
-    open: false
+    open: false,
   };
 
   handleOpen = () => {
@@ -80,7 +80,7 @@ class DeleteExercise extends Component {
 DeleteExercise.propTypes = {
   deleteExercise: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  exerciseId: PropTypes.string.isRequired
+  exerciseId: PropTypes.string.isRequired,
 };
 
 export default connect(null, { deleteExercise })(

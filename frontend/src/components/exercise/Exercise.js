@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
-import MyButton from "../utility/MyButton";
+import MyButton from "../../utility/MyButton";
 import DeleteExercise from "./DeleteExercise";
+import ExerciseDialog from "./ExerciseDialog";
+import LikeButton from "./LikeButton";
 
 // Material-UI items
 import Card from "@material-ui/core/Card";
@@ -15,57 +17,33 @@ import Typography from "@material-ui/core/Typography";
 
 // Icons
 import ChatIcon from "@material-ui/icons/Chat";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 
 // Redux
 import { connect } from "react-redux";
-import { likeExercise, unlikeExercise } from "../redux/actions/dataActions";
 
 const styles = {
   card: {
     position: "relative",
     display: "flex",
-    marginBottom: 20
+    marginBottom: 20,
   },
   image: {
     minWidth: 200,
-    objectFit: "cover"
+    objectFit: "cover",
   },
   content: {
     padding: 25,
-    objectFit: "cover"
+    objectFit: "cover",
   },
   handleDisplay: {
-    fontWeight: 360
+    fontWeight: 360,
   },
   body: {
-    fontWeight: 280
-  }
+    fontWeight: 280,
+  },
 };
 
 class Exercise extends Component {
-  checkIfExerciseIsLiked = () => {
-    if (
-      this.props.user.likes &&
-      this.props.user.likes.find(
-        like => like.exerciseId === this.props.exercise.exerciseId
-      )
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  likeExercise = () => {
-    this.props.likeExercise(this.props.exercise.exerciseId);
-  };
-
-  unlikeExercise = () => {
-    this.props.unlikeExercise(this.props.exercise.exerciseId);
-  };
-
   render() {
     dayjs.extend(relativeTime);
     const {
@@ -77,29 +55,13 @@ class Exercise extends Component {
         userHandle,
         exerciseId,
         likeCount,
-        commentCount
+        commentCount,
       },
       user: {
         authenticated,
-        credentials: { handle }
-      }
+        credentials: { handle },
+      },
     } = this.props;
-
-    const likeButton = !authenticated ? (
-      <MyButton tip="Like">
-        <Link to="/login">
-          <FavoriteBorder color="primary" />
-        </Link>
-      </MyButton>
-    ) : this.checkIfExerciseIsLiked() ? (
-      <MyButton tip="Undo like" onClick={this.unlikeExercise}>
-        <FavoriteIcon color="primary" />
-      </MyButton>
-    ) : (
-      <MyButton tip="Like" onClick={this.likeExercise}>
-        <FavoriteBorder color="primary" />
-      </MyButton>
-    );
 
     const deleteButton =
       authenticated && userHandle === handle ? (
@@ -130,12 +92,13 @@ class Exercise extends Component {
           <Typography variant="body1" className={classes.body}>
             {body}
           </Typography>
-          {likeButton}
+          <LikeButton exerciseId={exerciseId} />
           <span>{likeCount} Likes</span>
           <MyButton tip="Comments">
             <ChatIcon color="primary" />
           </MyButton>
           <span>{commentCount} Comments</span>
+          <ExerciseDialog exerciseId={exerciseId} userHandle={userHandle} />
         </CardContent>
       </Card>
     );
@@ -143,23 +106,13 @@ class Exercise extends Component {
 }
 
 Exercise.propTypes = {
-  likeExercise: PropTypes.func.isRequired,
-  unlikeExercise: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   exercise: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
-const mapActionsToProps = {
-  likeExercise,
-  unlikeExercise
-};
-
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(withStyles(styles)(Exercise));
+export default connect(mapStateToProps)(withStyles(styles)(Exercise));

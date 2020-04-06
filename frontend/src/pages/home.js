@@ -4,8 +4,8 @@ import { getExercises } from "../redux/actions/dataActions";
 import PropTypes from "prop-types";
 
 // Components
-import Exercise from "../components/Exercise";
-import Profile from "../components/Profile";
+import Exercise from "../components/exercise/Exercise";
+import Profile from "../components/profile/Profile";
 
 // Material-UI items
 import Grid from "@material-ui/core/Grid/";
@@ -18,7 +18,7 @@ export class home extends Component {
   render() {
     const { exercises, loading } = this.props.data;
     let recentExercisesMarkup = !loading ? (
-      exercises.map(exercise => (
+      exercises.map((exercise) => (
         <Exercise key={exercise.exerciseId} exercise={exercise} />
       ))
     ) : (
@@ -40,11 +40,11 @@ export class home extends Component {
 
 home.propTypes = {
   getExercises: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  data: state.data
+const mapStateToProps = (state) => ({
+  data: state.data,
 });
 
 export default connect(mapStateToProps, { getExercises })(home);

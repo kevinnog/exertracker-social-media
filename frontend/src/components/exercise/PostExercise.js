@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MyButton from "../utility/MyButton";
-import themeObject from "../utility/themeObject";
+import MyButton from "../../utility/MyButton";
+import themeObject from "../../utility/themeObject";
 
-// Material-UI items
 // Material-UI items
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -19,34 +18,36 @@ import CloseIcon from "@material-ui/icons/Close";
 
 // Redux
 import { connect } from "react-redux";
-import { postExercise, clearErrors } from "../redux/actions/dataActions";
+import { postExercise, clearErrors } from "../../redux/actions/dataActions";
 
 const styles = {
   ...themeObject,
   submitButton: {
-    position: "relative"
+    position: "relative",
+    float: "right",
+    marginTop: 10,
   },
   progressSpinner: {
-    position: "absolute"
+    position: "absolute",
   },
   closeButton: {
     position: "absolute",
     left: "90%",
-    top: "2%"
-  }
+    top: "4%",
+  },
 };
 
 class PostExercise extends Component {
   state = {
     open: false,
     body: "",
-    errors: {}
+    errors: {},
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({
-        errors: nextProps.UI.errors
+        errors: nextProps.UI.errors,
       });
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
@@ -63,11 +64,11 @@ class PostExercise extends Component {
     this.setState({ open: false, errors: {} });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.props.postExercise({ body: this.state.body });
   };
@@ -76,7 +77,7 @@ class PostExercise extends Component {
     const { errors } = this.state;
     const {
       classes,
-      UI: { loading }
+      UI: { loading },
     } = this.props;
 
     return (
@@ -138,11 +139,11 @@ class PostExercise extends Component {
 PostExercise.propTypes = {
   postExercise: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
-  UI: PropTypes.object.isRequired
+  UI: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  UI: state.UI
+const mapStateToProps = (state) => ({
+  UI: state.UI,
 });
 
 export default connect(mapStateToProps, { postExercise, clearErrors })(

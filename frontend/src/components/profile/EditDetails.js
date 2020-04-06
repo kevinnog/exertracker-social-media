@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MyButton from "../utility/MyButton";
+import MyButton from "../../utility/MyButton";
 
 // Material-UI items
 import Button from "@material-ui/core/Button";
@@ -16,28 +16,28 @@ import EditIcon from "@material-ui/icons/Edit";
 
 // Redux
 import { connect } from "react-redux";
-import { editUserDetails } from "../redux/actions/userActions";
+import { editUserDetails } from "../../redux/actions/userActions";
 
-const styles = theme => ({
+const styles = (theme) => ({
   palette: {
     //type: "dark",
     primary: {
       light: "#455a64",
       main: "#263238",
-      contrastText: "#fff"
+      contrastText: "#fff",
     },
     secondary: {
       light: "#ef5350",
       main: "#f5f5f5",
-      contrastText: "#fff"
-    }
+      contrastText: "#fff",
+    },
   },
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
   },
   button: {
-    float: "right"
-  }
+    float: "right",
+  },
 });
 
 class EditDetails extends Component {
@@ -45,27 +45,27 @@ class EditDetails extends Component {
     bio: "",
     website: "",
     location: "",
-    open: false
+    open: false,
   };
 
-  mapUserDetailsToState = credentials => {
+  mapUserDetailsToState = (credentials) => {
     this.setState({
       bio: credentials.bio ? credentials.bio : "",
       website: credentials.website ? credentials.website : "",
-      location: credentials.location ? credentials.location : ""
+      location: credentials.location ? credentials.location : "",
     });
   };
 
   handleOpen = () => {
     this.setState({
-      open: true
+      open: true,
     });
     this.mapUserDetailsToState(this.props.credentials);
   };
 
   handleClose = () => {
     this.setState({
-      open: false
+      open: false,
     });
   };
 
@@ -74,9 +74,9 @@ class EditDetails extends Component {
     this.mapUserDetailsToState(credentials);
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -84,7 +84,7 @@ class EditDetails extends Component {
     const userDetails = {
       bio: this.state.bio,
       website: this.state.website,
-      location: this.state.location
+      location: this.state.location,
     };
 
     this.props.editUserDetails(userDetails);
@@ -161,11 +161,11 @@ class EditDetails extends Component {
 
 EditDetails.propTypes = {
   editUserDetails: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  credentials: state.user.credentials
+const mapStateToProps = (state) => ({
+  credentials: state.user.credentials,
 });
 
 export default connect(mapStateToProps, { editUserDetails })(

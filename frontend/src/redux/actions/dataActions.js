@@ -7,89 +7,108 @@ import {
   DELETE_EXERCISE,
   LOADING_UI,
   SET_ERRORS,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  SET_EXERCISE,
+  STOP_LOADING_UI,
 } from "../types";
 import axios from "axios";
 
 // Get all exercises
-export const getExercises = () => dispatch => {
+export const getExercises = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
     .get("/exercise")
-    .then(res => {
+    .then((res) => {
       dispatch({ type: SET_EXERCISES, payload: res.data });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({ type: SET_EXERCISES, payload: [] });
     });
 };
 
+// Get one exercise
+export const getExercise = (exerciseId) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .get(`/exercise/${exerciseId}`)
+    .then((res) => {
+      dispatch({
+        type: SET_EXERCISE,
+        payload: res.data,
+      });
+      dispatch({ type: STOP_LOADING_UI });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 // Post an exercise
-export const postExercise = newExercise => dispatch => {
+export const postExercise = (newExercise) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios({
     method: "post",
     url: "/exercise",
     data: newExercise,
-    headers: { Authorization: localStorage.getItem("FBIdToken") }
+    headers: { Authorization: localStorage.getItem("FBIdToken") },
   })
-    .then(res => {
+    .then((res) => {
       dispatch({ type: POST_EXERCISE, payload: res.data });
       dispatch({ type: CLEAR_ERRORS });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data,
       });
     });
 };
 
 // Like an exercise
-export const likeExercise = exerciseId => dispatch => {
+export const likeExercise = (exerciseId) => (dispatch) => {
   axios({
     method: "get",
     url: `/exercise/${exerciseId}/like`,
-    headers: { Authorization: localStorage.getItem("FBIdToken") }
+    headers: { Authorization: localStorage.getItem("FBIdToken") },
   })
-    .then(res => {
+    .then((res) => {
       dispatch({ type: LIKE_EXERCISE, payload: res.data });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
 // Unlike an exercise
-export const unlikeExercise = exerciseId => dispatch => {
+export const unlikeExercise = (exerciseId) => (dispatch) => {
   axios({
     method: "get",
     url: `/exercise/${exerciseId}/unlike`,
-    headers: { Authorization: localStorage.getItem("FBIdToken") }
+    headers: { Authorization: localStorage.getItem("FBIdToken") },
   })
-    .then(res => {
+    .then((res) => {
       dispatch({ type: UNLIKE_EXERCISE, payload: res.data });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
 // Delete an exercise
-export const deleteExercise = exerciseId => dispatch => {
+export const deleteExercise = (exerciseId) => (dispatch) => {
   axios({
     method: "delete",
     url: `/exercise/${exerciseId}`,
-    headers: { Authorization: localStorage.getItem("FBIdToken") }
+    headers: { Authorization: localStorage.getItem("FBIdToken") },
   })
     .then(() => {
       dispatch({ type: DELETE_EXERCISE, payload: exerciseId });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
-export const clearErrors = () => dispatch => {
+export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
