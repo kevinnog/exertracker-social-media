@@ -20,8 +20,9 @@ import AuthRoute from "./utility/AuthRoute";
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
+import user from "./pages/user";
 
-const darkTheme = createMuiTheme(themeObject);
+const theme = createMuiTheme(themeObject);
 
 const token = localStorage.FBIdToken;
 
@@ -39,7 +40,7 @@ if (token) {
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={darkTheme}>
+      <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <Router>
             <Navbar />
@@ -48,6 +49,7 @@ class App extends Component {
                 <Route exact path="/" component={home} />
                 <AuthRoute exact path="/login" component={login} />
                 <AuthRoute exact path="/signup" component={signup} />
+                <Route exact path="/users/:handle" component={user} />
               </Switch>
             </div>
           </Router>

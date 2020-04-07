@@ -6,6 +6,7 @@ import {
   DELETE_EXERCISE,
   POST_EXERCISE,
   SET_EXERCISE,
+  SUBMIT_COMMENT,
 } from "../types";
 
 const initialState = {
@@ -39,10 +40,17 @@ export default function (state = initialState, action) {
       );
       state.exercises[index] = action.payload;
       if (state.exercise.exerciseId === action.payload.exerciseId) {
-        state.exercise = action.payload;
+        state.exercise = {
+          comments: state.exercise.comments,
+          ...action.payload,
+        };
       }
       return {
         ...state,
+        exercise: {
+          ...state.exercise,
+          comments: [...state.exercise.comments],
+        },
       };
     case DELETE_EXERCISE:
       let index2 = state.exercises.findIndex(
@@ -56,6 +64,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         exercises: [action.payload, ...state.exercises],
+      };
+    case SUBMIT_COMMENT:
+      return {
+        ...state,
+        exercise: {
+          ...state.exercise,
+          comments: [action.payload, ...state.exercise.comments],
+        },
       };
     default:
       return state;

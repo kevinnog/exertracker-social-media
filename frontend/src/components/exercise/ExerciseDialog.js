@@ -4,6 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import MyButton from "../../utility/MyButton";
 import LikeButton from "./LikeButton";
 import Comments from "./Comments";
+import CommentForm from "./CommentForm";
 import themeObject from "../../utility/themeObject";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
@@ -22,7 +23,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 
 // Redux
 import { connect } from "react-redux";
-import { getExercise } from "../../redux/actions/dataActions";
+import { getExercise, clearErrors } from "../../redux/actions/dataActions";
 
 const styles = {
   ...themeObject,
@@ -63,6 +64,7 @@ class ExerciseDialog extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    this.props.clearErrors();
   };
 
   render() {
@@ -113,6 +115,7 @@ class ExerciseDialog extends Component {
           <span>{commentCount} Comments</span>
         </Grid>
         <hr className={classes.visibleSeparator} />
+        <CommentForm exerciseId={exerciseId} />
         <Comments comments={comments} />
       </Grid>
     );
@@ -149,6 +152,7 @@ class ExerciseDialog extends Component {
 }
 
 ExerciseDialog.propTypes = {
+  clearErrors: PropTypes.func.isRequired,
   getExercise: PropTypes.func.isRequired,
   exerciseId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
@@ -163,6 +167,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   getExercise,
+  clearErrors,
 };
 
 export default connect(

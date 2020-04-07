@@ -10,6 +10,7 @@ import {
   CLEAR_ERRORS,
   SET_EXERCISE,
   STOP_LOADING_UI,
+  SUBMIT_COMMENT,
 } from "../types";
 import axios from "axios";
 
@@ -94,6 +95,29 @@ export const unlikeExercise = (exerciseId) => (dispatch) => {
     });
 };
 
+// Submit a comment
+export const submitComment = (exerciseId, commentData) => (dispatch) => {
+  axios({
+    method: "post",
+    url: `/exercise/${exerciseId}/comment`,
+    data: commentData,
+    headers: { Authorization: localStorage.getItem("FBIdToken") },
+  })
+    .then((res) => {
+      dispatch({
+        type: SUBMIT_COMMENT,
+        payload: res.data,
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
 // Delete an exercise
 export const deleteExercise = (exerciseId) => (dispatch) => {
   axios({
@@ -106,6 +130,21 @@ export const deleteExercise = (exerciseId) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const getUserData = (userHandle) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/user/${userHandle}`)
+    .then((res) => {
+      dispatch({
+        type: SET_EXERCISES,
+        payload: res.data.exercises,
+      });
+    })
+    .catch(() => {
+      dispatch({ type: SET_EXERCISES, payload: null });
     });
 };
 
