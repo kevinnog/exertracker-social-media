@@ -4,7 +4,8 @@ import {
   SET_UNAUTHENTICATED,
   LOADING_USER,
   LIKE_EXERCISE,
-  UNLIKE_EXERCISE
+  UNLIKE_EXERCISE,
+  MARK_NOTIFICATIONS_READ,
 } from "../types";
 
 const initialState = {
@@ -12,15 +13,15 @@ const initialState = {
   loading: false,
   credentials: {},
   likes: [],
-  notifications: []
+  notifications: [],
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_AUTHENTICATED:
       return {
         ...state,
-        authenticated: true
+        authenticated: true,
       };
     case SET_UNAUTHENTICATED:
       return initialState;
@@ -28,12 +29,12 @@ export default function(state = initialState, action) {
       return {
         authenticated: true,
         loading: false,
-        ...action.payload
+        ...action.payload,
       };
     case LOADING_USER:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case LIKE_EXERCISE:
       return {
@@ -42,17 +43,23 @@ export default function(state = initialState, action) {
           ...state.likes,
           {
             userHandle: state.credentials.handle,
-            exerciseId: action.payload.exerciseId
-          }
-        ]
+            exerciseId: action.payload.exerciseId,
+          },
+        ],
       };
     case UNLIKE_EXERCISE:
       return {
         ...state,
         likes: state.likes.filter(
-          like => like.exerciseId !== action.payload.exerciseId
-        )
+          (like) => like.exerciseId !== action.payload.exerciseId
+        ),
       };
+    case MARK_NOTIFICATIONS_READ:
+      state.notifications.forEach((not) => (not.read = true));
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

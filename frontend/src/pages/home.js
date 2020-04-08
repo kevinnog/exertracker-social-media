@@ -17,6 +17,7 @@ export class home extends Component {
 
   render() {
     const { exercises, loading } = this.props.data;
+
     let recentExercisesMarkup = !loading ? (
       exercises.map((exercise) => (
         <Exercise key={exercise.exerciseId} exercise={exercise} />

@@ -41,16 +41,12 @@ export default function (state = initialState, action) {
       state.exercises[index] = action.payload;
       if (state.exercise.exerciseId === action.payload.exerciseId) {
         state.exercise = {
-          comments: state.exercise.comments,
+          ...state.exercise,
           ...action.payload,
         };
       }
       return {
         ...state,
-        exercise: {
-          ...state.exercise,
-          comments: [...state.exercise.comments],
-        },
       };
     case DELETE_EXERCISE:
       let index2 = state.exercises.findIndex(
@@ -66,12 +62,21 @@ export default function (state = initialState, action) {
         exercises: [action.payload, ...state.exercises],
       };
     case SUBMIT_COMMENT:
+      let commentedOnIndex = state.exercises.findIndex(
+        (exercise) => exercise.exerciseId === action.payload.exerciseId
+      );
       return {
         ...state,
         exercise: {
           ...state.exercise,
           comments: [action.payload, ...state.exercise.comments],
+          commentCount: state.exercise.commentCount + 1,
         },
+        exercises: state.exercises.map((exercise, exercisesArrIndex) =>
+          exercisesArrIndex === commentedOnIndex
+            ? { ...exercise, commentCount: exercise.commentCount + 1 }
+            : exercise
+        ),
       };
     default:
       return state;

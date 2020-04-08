@@ -98,7 +98,11 @@ class Exercise extends Component {
             <ChatIcon color="primary" />
           </MyButton>
           <span>{commentCount} Comments</span>
-          <ExerciseDialog exerciseId={exerciseId} userHandle={userHandle} />
+          <ExerciseDialog
+            exerciseId={exerciseId}
+            userHandle={userHandle}
+            openDialog={this.props.openDialog}
+          />
         </CardContent>
       </Card>
     );
@@ -109,6 +113,7 @@ Exercise.propTypes = {
   user: PropTypes.object.isRequired,
   exercise: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
+  openDialog: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

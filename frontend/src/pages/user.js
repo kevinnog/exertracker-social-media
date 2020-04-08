@@ -14,10 +14,17 @@ import { getUserData } from "../redux/actions/dataActions";
 class user extends Component {
   state = {
     profile: null,
+    exerciseIdParam: null,
   };
 
   componentDidMount() {
     const handle = this.props.match.params.handle;
+    const exerciseId = this.props.match.params.exerciseId;
+
+    if (exerciseId) {
+      this.setState({ exerciseIdParam: exerciseId });
+    }
+
     this.props.getUserData(handle);
     axios
       .get(`/user/${handle}`)
@@ -33,15 +40,30 @@ class user extends Component {
 
   render() {
     const { exercises, loading } = this.props.data;
+    const { exerciseIdParam } = this.state;
 
     const exercisesMarkup = loading ? (
       <p>Loading data...</p>
     ) : exercises === null ? (
       <p>This user doesn't have any exercise yet</p>
-    ) : (
+    ) : !exerciseIdParam ? (
       exercises.map((exercise) => (
         <Exercise key={exercise.exerciseId} exercise={exercise} />
       ))
+    ) : (
+      exercises.map((exercise) => {
+        if (exercise.exerciseId !== exerciseIdParam) {
+          return <Exercise key={exercise.exerciseId} exercise={exercise} />;
+        } else {
+          return (
+            <Exercise
+              key={exercise.exerciseId}
+              exercise={exercise}
+              openDialog
+            />
+          );
+        }
+      })
     );
 
     return (
