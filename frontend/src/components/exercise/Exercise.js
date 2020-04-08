@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
 import MyButton from "../../utility/MyButton";
+
+// Components
 import DeleteExercise from "./DeleteExercise";
 import ExerciseDialog from "./ExerciseDialog";
 import LikeButton from "./LikeButton";

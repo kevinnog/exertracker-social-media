@@ -69,6 +69,14 @@ export default {
       maxWidth: "100%",
       borderRadius: "50%",
     },
+    "& .profile-pic": {
+      width: 200,
+      heigth: 200,
+      objectFit: "cover",
+      maxWidth: "100%",
+      maxHeigth: "100%",
+      borderRadius: "150%",
+    },
     "& .profile-details": {
       textAlign: "center",
       "& span, svg": {
@@ -93,5 +101,42 @@ export default {
     "& a": {
       margin: "20px 10px",
     },
+  },
+  card: {
+    display: "flex",
+    marginBottom: 20,
+  },
+  cardContent: {
+    width: "100%",
+    flexDirection: "column",
+    padding: 25,
+  },
+  cover: {
+    minWidth: 200,
+    objectFit: "cover",
+  },
+  handle: {
+    width: 60,
+    height: 18,
+    backgroundColor: "#00bcd4",
+    marginBottom: 7,
+  },
+  date: {
+    height: 14,
+    width: 100,
+    backgroundColor: "rgba(0,0,0, 0.3)",
+    marginBottom: 10,
+  },
+  fullLine: {
+    height: 15,
+    width: "90%",
+    backgroundColor: "rgba(0,0,0, 0.6)",
+    marginBottom: 10,
+  },
+  halfLine: {
+    height: 15,
+    width: "50%",
+    backgroundColor: "rgba(0,0,0, 0.6)",
+    marginBottom: 10,
   },
 };

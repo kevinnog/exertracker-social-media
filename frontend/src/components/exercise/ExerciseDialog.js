@@ -2,12 +2,14 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MyButton from "../../utility/MyButton";
-import LikeButton from "./LikeButton";
-import Comments from "./Comments";
-import CommentForm from "./CommentForm";
 import themeObject from "../../utility/themeObject";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+
+// Components
+import LikeButton from "./LikeButton";
+import Comments from "./Comments";
+import CommentForm from "./CommentForm";
 
 // Material-UI items
 import Dialog from "@material-ui/core/Dialog";

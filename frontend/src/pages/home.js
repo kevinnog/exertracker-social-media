@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getExercises } from "../redux/actions/dataActions";
 import PropTypes from "prop-types";
 
 // Components
 import Exercise from "../components/exercise/Exercise";
 import Profile from "../components/profile/Profile";
+import ExerciseSkeleton from "../utility/ExerciseSkeleton";
 
 // Material-UI items
 import Grid from "@material-ui/core/Grid/";
+
+// Redux
+import { connect } from "react-redux";
+import { getExercises } from "../redux/actions/dataActions";
 
 export class home extends Component {
   componentDidMount() {
@@ -23,7 +26,7 @@ export class home extends Component {
         <Exercise key={exercise.exerciseId} exercise={exercise} />
       ))
     ) : (
-      <p>Loading...</p>
+      <ExerciseSkeleton />
     );
 
     return (

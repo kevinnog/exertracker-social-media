@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import MyButton from "../../utility/MyButton";
+
+// Components
 import PostExercise from "../exercise/PostExercise";
 import Notifications from "./Notifications";
 

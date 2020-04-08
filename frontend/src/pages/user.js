@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+
+// Components
 import Exercise from "../components/exercise/Exercise";
 import StaticProfile from "../components/profile/StaticProfile";
+import ExerciseSkeleton from "../utility/ExerciseSkeleton";
+import ProfileSkeleton from "../utility/ProfileSkeleton";
 
 // Material-UI items
 import Grid from "@material-ui/core/Grid";
@@ -43,7 +47,7 @@ class user extends Component {
     const { exerciseIdParam } = this.state;
 
     const exercisesMarkup = loading ? (
-      <p>Loading data...</p>
+      <ExerciseSkeleton />
     ) : exercises === null ? (
       <p>This user doesn't have any exercise yet</p>
     ) : !exerciseIdParam ? (
@@ -73,7 +77,7 @@ class user extends Component {
         </Grid>
         <Grid item sm={4} xs={12}>
           {this.state.profile === null ? (
-            <p>Loading profile...</p>
+            <ProfileSkeleton />
           ) : (
             <StaticProfile profile={this.state.profile} />
           )}
