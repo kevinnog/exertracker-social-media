@@ -5,6 +5,7 @@ import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import jwtDecode from "jwt-decode";
 import themeObject from "./utility/themeObject";
+import axios from "axios";
 
 // Redux
 import { Provider } from "react-redux";
@@ -23,6 +24,9 @@ import signup from "./pages/signup";
 import user from "./pages/user";
 
 const theme = createMuiTheme(themeObject);
+
+axios.defaults.baseURL =
+  "https://us-east1-exertracker-social-media.cloudfunctions.net/api";
 
 const token = localStorage.FBIdToken;
 

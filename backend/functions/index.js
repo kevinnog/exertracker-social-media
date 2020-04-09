@@ -1,7 +1,12 @@
 const functions = require("firebase-functions");
 const app = require("express")();
 const FBAuth = require("./utility/fbAuth");
+
+const cors = require("cors");
+app.use(cors());
+
 const { db } = require("./utility/database");
+
 const {
   getAllExercises,
   postOneExercise,
@@ -9,7 +14,7 @@ const {
   deleteExercise,
   commentOnExercise,
   likeExercise,
-  unlikeExercise
+  unlikeExercise,
 } = require("./handlers/exercise");
 const {
   signup,
@@ -18,7 +23,7 @@ const {
   addUserDetails,
   getAuthenticatedUser,
   getUserDetails,
-  markNotificationsRead
+  markNotificationsRead,
 } = require("./handlers/user");
 
 // ROUTES
@@ -48,11 +53,11 @@ exports.api = functions.region("us-east1").https.onRequest(app);
 exports.createNotificationOnLike = functions
   .region("us-east1")
   .firestore.document("likes/{id}")
-  .onCreate(snapshot => {
+  .onCreate((snapshot) => {
     return db
       .doc(`/exercise-logs/${snapshot.data().exerciseId}`)
       .get()
-      .then(doc => {
+      .then((doc) => {
         if (
           doc.exists &&
           doc.data().userHandle !== snapshot.data().userHandle
@@ -63,11 +68,11 @@ exports.createNotificationOnLike = functions
             read: false,
             exerciseId: doc.id,
             type: "like",
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
@@ -75,11 +80,11 @@ exports.createNotificationOnLike = functions
 exports.deleteNotificationOnUnlike = functions
   .region("us-east1")
   .firestore.document("likes/{id}")
-  .onDelete(snapshot => {
+  .onDelete((snapshot) => {
     return db
       .doc(`/notifications/${snapshot.id}`)
       .delete()
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         return;
       });
@@ -88,11 +93,11 @@ exports.deleteNotificationOnUnlike = functions
 exports.createNotificationOnComment = functions
   .region("us-east1")
   .firestore.document("comments/{id}")
-  .onCreate(snapshot => {
+  .onCreate((snapshot) => {
     return db
       .doc(`/exercise-logs/${snapshot.data().exerciseId}`)
       .get()
-      .then(doc => {
+      .then((doc) => {
         if (
           doc.exists &&
           doc.data().userHandle !== snapshot.data().userHandle
@@ -103,11 +108,11 @@ exports.createNotificationOnComment = functions
             read: false,
             exerciseId: doc.id,
             type: "comment",
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         return;
       });
@@ -116,15 +121,15 @@ exports.createNotificationOnComment = functions
 exports.onUserImageChange = functions
   .region("us-east1")
   .firestore.document("/users/{userId}")
-  .onUpdate(change => {
+  .onUpdate((change) => {
     if (change.before.data().imageUrl !== change.after.data().imageUrl) {
       let batch = db.batch();
       return db
         .collection("exercise-logs")
         .where("userHandle", "==", change.before.data().handle)
         .get()
-        .then(data => {
-          data.forEach(doc => {
+        .then((data) => {
+          data.forEach((doc) => {
             const exercise = db.doc(`/exercise-logs/${doc.id}`);
             batch.update(exercise, { userImage: change.after.data().imageUrl });
           });
@@ -144,8 +149,8 @@ exports.onExerciseDelete = functions
       .collection("comments")
       .where("exerciseId", "==", exerciseId)
       .get()
-      .then(data => {
-        data.forEach(doc => {
+      .then((data) => {
+        data.forEach((doc) => {
           batch.delete(db.doc(`/comments/${doc.id}`));
         });
         return db
@@ -153,8 +158,8 @@ exports.onExerciseDelete = functions
           .where("exerciseId", "==", exerciseId)
           .get();
       })
-      .then(data => {
-        data.forEach(doc => {
+      .then((data) => {
+        data.forEach((doc) => {
           batch.delete(db.doc(`/likes/${doc.id}`));
         });
         return db
@@ -162,13 +167,13 @@ exports.onExerciseDelete = functions
           .where("exerciseId", "==", exerciseId)
           .get();
       })
-      .then(data => {
-        data.forEach(doc => {
+      .then((data) => {
+        data.forEach((doc) => {
           batch.delete(db.doc(`/notifications/${doc.id}`));
         });
         return batch.commit();
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
