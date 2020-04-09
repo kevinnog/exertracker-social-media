@@ -62,10 +62,11 @@ const StaticProfile = (props) => {
         <hr />
         <div className="profile-details">
           <MuiLink
+            className={classes.userHandleLink}
             component={Link}
             to={`/users/${handle}`}
-            color="primary"
             variant="h5"
+            underline="none"
           >
             @{handle}
           </MuiLink>

@@ -83,7 +83,7 @@ class PostExercise extends Component {
     return (
       <Fragment>
         <MyButton tip="Post a new Exercise" onClick={this.handleOpen}>
-          <AddIcon color="inherit" />
+          <AddIcon className={classes.navBarButton} />
         </MyButton>
         <Dialog
           open={this.state.open}

@@ -39,9 +39,13 @@ const styles = {
   },
   handleDisplay: {
     fontWeight: 360,
+    color: "#01579b",
   },
   body: {
     fontWeight: 280,
+  },
+  commentColor: {
+    color: "#1976d2",
   },
 };
 
@@ -97,7 +101,7 @@ class Exercise extends Component {
           <LikeButton exerciseId={exerciseId} />
           <span>{likeCount} Likes</span>
           <MyButton tip="Comments">
-            <ChatIcon color="primary" />
+            <ChatIcon className={classes.commentColor} />
           </MyButton>
           <span>{commentCount} Comments</span>
           <ExerciseDialog

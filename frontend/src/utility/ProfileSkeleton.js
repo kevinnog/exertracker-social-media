@@ -16,7 +16,7 @@ const styles = {
   ...themeObject,
   handle: {
     height: 20,
-    backgroundColor: themeObject.palette.primary.main,
+    backgroundColor: "#01579b",
     width: 60,
     margin: "0 auto 7px auto",
   },

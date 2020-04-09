@@ -2,8 +2,8 @@ export default {
   palette: {
     primary: {
       light: "#33c9dc",
-      main: "#00bcd4",
-      dark: "#008394",
+      main: "#263238",
+      dark: "#455a64",
       contrastText: "#fff",
     },
     secondary: {
@@ -83,7 +83,7 @@ export default {
         verticalAlign: "middle",
       },
       "& a": {
-        color: "#00bcd4",
+        color: "#01579b",
       },
     },
     "& hr": {
@@ -118,7 +118,7 @@ export default {
   handle: {
     width: 60,
     height: 18,
-    backgroundColor: "#00bcd4",
+    backgroundColor: "#01579b",
     marginBottom: 7,
   },
   date: {
@@ -138,5 +138,14 @@ export default {
     width: "50%",
     backgroundColor: "rgba(0,0,0, 0.6)",
     marginBottom: 10,
+  },
+  navBarButton: {
+    color: "#cfd8dc",
+  },
+  likeColor: {
+    color: "#f44336",
+  },
+  userHandleLink: {
+    color: "#01579b",
   },
 };

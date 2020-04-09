@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import MyButton from "../../utility/MyButton";
+import withStyles from "@material-ui/core/styles/withStyles";
+import themeObject from "../../utility/themeObject";
 
 // Components
 import PostExercise from "../exercise/PostExercise";
@@ -18,22 +20,26 @@ import HomeIcon from "@material-ui/icons/Home";
 // Redux
 import { connect } from "react-redux";
 
+const styles = {
+  ...themeObject,
+};
+
 class Navbar extends Component {
   render() {
-    const { authenticated } = this.props;
+    const { authenticated, classes } = this.props;
 
     return (
       <AppBar>
         <ToolBar className="nav-container">
           {authenticated ? (
             <Fragment>
-              <PostExercise />
+              <PostExercise className={classes.navBarButton} />
               <Link to="/">
                 <MyButton tip="Home">
-                  <HomeIcon color="inherit" />
+                  <HomeIcon className={classes.navBarButton} />
                 </MyButton>
               </Link>
-              <Notifications color="inherit" />
+              <Notifications />
             </Fragment>
           ) : (
             <Fragment>
@@ -56,10 +62,11 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   authenticated: PropTypes.bool.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authenticated: state.user.authenticated,
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withStyles(styles)(Navbar));

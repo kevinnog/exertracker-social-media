@@ -52,6 +52,12 @@ const styles = {
     marginTop: 50,
     marginBottom: 50,
   },
+  commentColor: {
+    color: "#1976d2",
+  },
+  userHandleLink: {
+    color: "#01579b",
+  },
 };
 
 class ExerciseDialog extends Component {
@@ -115,7 +121,7 @@ class ExerciseDialog extends Component {
         <Grid item sm={7}>
           <Typography
             component={Link}
-            color="primary"
+            className={classes.userHandleLink}
             variant="h5"
             to={`/users/${userHandle}`}
           >
@@ -130,7 +136,7 @@ class ExerciseDialog extends Component {
           <LikeButton exerciseId={exerciseId} />
           <span>{likeCount} Likes</span>
           <MyButton tip="Comments">
-            <ChatIcon color="primary" />
+            <ChatIcon className={classes.commentColor} />
           </MyButton>
           <span>{commentCount} Comments</span>
         </Grid>

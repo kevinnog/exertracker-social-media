@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+import themeObject from "../../utility/themeObject";
 
 // Material-UI items
 import Menu from "@material-ui/core/Menu";
@@ -20,6 +22,10 @@ import ChatIcon from "@material-ui/icons/Chat";
 // Redux
 import { connect } from "react-redux";
 import { markNotificationsRead } from "../../redux/actions/userActions";
+
+const styles = {
+  ...themeObject,
+};
 
 class Notifications extends Component {
   state = {
@@ -42,6 +48,7 @@ class Notifications extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     const notifications = this.props.notifications;
     const anchorEl = this.state.anchorEl;
 
@@ -57,12 +64,16 @@ class Notifications extends Component {
               }
               color="secondary"
             >
-              <NotificationsIcon />
+              <NotificationsIcon className={classes.navBarButton} />
             </Badge>
           ))
-        : (notificationsIcon = <NotificationsIcon />);
+        : (notificationsIcon = (
+            <NotificationsIcon className={classes.navBarButton} />
+          ));
     } else {
-      notificationsIcon = <NotificationsIcon />;
+      notificationsIcon = (
+        <NotificationsIcon className={classes.navBarButton} />
+      );
     }
     let notificationsMarkup =
       notifications && notifications.length > 0 ? (
@@ -123,6 +134,7 @@ class Notifications extends Component {
 Notifications.propTypes = {
   markNotificationsRead: PropTypes.func.isRequired,
   notifications: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -130,5 +142,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { markNotificationsRead })(
-  Notifications
+  withStyles(styles)(Notifications)
 );
